@@ -26,8 +26,8 @@
             height: 100%;
             background: url({{ asset('img/logo_kura.svg') }}) no-repeat center center fixed;
             background-size: contain;
-            filter: blur(10px);
-            opacity: 0.4;
+            filter: blur(5px);
+            opacity: 0.5;
             z-index: 0;
             pointer-events: none;
         }
@@ -41,10 +41,9 @@
 </head>
 <body class="min-h-screen antialiased bg-base-200/50 dark:bg-base-200">
     {{-- MAIN --}}
-    <x-main>
+    <x-main full-width>
         {{-- The `$slot` goes here --}}
         <x-slot:content>
-            <x-theme-changer/>
             {{ $slot }}
         </x-slot:content>
     </x-main>

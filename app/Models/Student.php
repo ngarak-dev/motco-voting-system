@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Student extends Model {
+class Student extends Authenticatable {
     use HasUlids;
-
+    use Notifiable;
     protected $fillable = [
         'admission_number',
         'first_name',
