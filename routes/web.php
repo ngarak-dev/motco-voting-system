@@ -1,11 +1,12 @@
 <?php
 
-use App\Livewire\Admin\Authentication;
-use App\Livewire\Admin\Dashboard;
-use App\Livewire\Voter\Authentication as VoterAuthentication;
-use App\Livewire\Voter\Dashboard as VoterDashboard;
 use App\Livewire\Welcome;
+use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\ImportVoters;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Admin\Authentication;
+use App\Livewire\Voter\Dashboard as VoterDashboard;
+use App\Livewire\Voter\Authentication as VoterAuthentication;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,15 +21,20 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Welcome::class)->middleware('guest')->name('welcome');
 
-Route::get('/admin/sign-in', Authentication::class)->middleware('guest')->name('admin-sign-in');
-Route::get('/voter/sign-in', VoterAuthentication::class)->middleware('guest')->name('voter-sign-in');
+Route::middleware('guest')->group(function () {
+    Route::get('/admin/sign-in', Authentication::class)->name('admin-sign-in');
+    Route::get('/voter/sign-in', VoterAuthentication::class)->name('login');
+});
 
-Route::group(['prefix'=> 'admin', 'middleware' => ['auth:web']], function () {
+Route::middleware(['auth:web'])->prefix('admin')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('admin-dashboard');
+    Route::get('/import-voters', ImportVoters::class)->name('admin-import-voters');
+
+
     Route::get('/logout', [Dashboard::class, 'logout'])->name('admin-logout');
 });
 
-Route::group(['prefix'=> 'voter', 'middleware' => ['auth:student']], function () {
-    Route::get('/dashboard', VoterDashboard::class)->name('voter-dashboard');
+Route::middleware(['auth:student'])->prefix('voter')->group(function () {
+    Route::get('/dashboard', VoterDashboard::class)->name('home');
     Route::get('/logout', [VoterDashboard::class, 'logout'])->name('voter-logout');
 });

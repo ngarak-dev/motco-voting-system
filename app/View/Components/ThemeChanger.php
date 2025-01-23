@@ -14,9 +14,6 @@ class ThemeChanger extends Component {
         //
     }
 
-    // <x-button label="Ondoka kwenye akaunti" class="btn-ghost btn-xs hover:bg-red-400" wire:click="save" icon-right="o-power" spinner no-wire-navigate link="/admin/logout" />
-
-
     /**
      * Get the view / contents that represent the component.
      */

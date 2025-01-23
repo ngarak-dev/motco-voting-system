@@ -26,7 +26,7 @@
             height: 100%;
             background: url({{ asset('img/logo_kura.svg') }}) no-repeat center center fixed;
             background-size: contain;
-            filter: blur(10px);
+            filter: blur(4px);
             opacity: 0.4;
             z-index: 0;
             pointer-events: none;

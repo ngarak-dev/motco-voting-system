@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()->create([
-            'name' => 'Voter System Admin',
+            'name' => 'Msimamizi wa Uchaguzi',
             'username' => 'admin',
             'email' => 'admin@morogorotc.ac.tz',
         ]);

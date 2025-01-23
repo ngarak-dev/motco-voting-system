@@ -17,53 +17,40 @@
 </head>
 <body class="min-h-screen antialiased bg-base-200/50 dark:bg-base-200">
 
-    {{-- NAVBAR mobile only --}}
-    <x-nav sticky class="lg:hidden">
-        <x-slot:brand>
-            <x-app-brand />
-        </x-slot:brand>
-        <x-slot:actions>
-            <label for="main-drawer" class="lg:hidden me-3">
-                <x-icon name="o-bars-3" class="cursor-pointer" />
-            </label>
-        </x-slot:actions>
-    </x-nav>
-
-    {{-- MAIN --}}
-    <x-main full-width>
-        {{-- SIDEBAR --}}
-        <x-slot:sidebar drawer="main-drawer" collapsible class="bg-base-100 lg:bg-inherit">
-
-            {{-- BRAND --}}
-            <x-app-brand class="p-5 pt-3" />
-
-            {{-- MENU --}}
-            <x-menu activate-by-route>
-
-                {{-- User --}}
-                @if($user = auth()->user())
-                    <x-menu-separator />
-
-                    <x-list-item :item="$user" value="name" sub-value="email" no-separator no-hover class="-mx-2 !-my-2 rounded">
-                        <x-slot:actions>
-                            <x-button icon="o-power" class="btn-circle btn-ghost btn-xs" tooltip-left="logoff" no-wire-navigate link="/logout" />
-                        </x-slot:actions>
-                    </x-list-item>
-
-                    <x-menu-separator />
-                @endif
-
-                <x-menu-item title="Hello" icon="o-sparkles" link="/" />
-                <x-menu-sub title="Settings" icon="o-cog-6-tooth">
-                    <x-menu-item title="Wifi" icon="o-wifi" link="####" />
-                    <x-menu-item title="Archives" icon="o-archive-box" link="####" />
-                </x-menu-sub>
-            </x-menu>
-        </x-slot:sidebar>
-
+    <x-main>
         {{-- The `$slot` goes here --}}
         <x-slot:content>
-            <x-theme-changer/>
+            {{-- <x-theme-changer/> --}}
+
+            {{-- NavBar --}}
+            <div class="flex justify-center mb-4">
+                <img src="{{ asset('img/logo_kura.svg') }}" class="w-36"/>
+                <x-theme-changer/>
+            </div>
+
+            <header class="sticky inset-x-0 top-0 z-50 flex flex-wrap w-full text-sm md:justify-start md:flex-nowrap">
+                <nav class="relative max-w-2xl w-full border border-gray-200 shadow-md rounded-[2rem] mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto">
+                  <div class="flex items-center justify-between px-4 md:px-0">
+                    <div class="flex items-center">
+                      <a class="flex-none inline-block font-semibold rounded-mdfocus:outline-none focus:opacity-80" href="{{ route('admin-dashboard') }}" aria-label="Logo">
+                        {{ auth()->user()->name }}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div id="hs-navbar-header-floating" class="hidden overflow-hidden transition-all duration-300 hs-collapse basis-full grow md:block" aria-labelledby="hs-navbar-header-floating-collapse">
+                    <div class="flex flex-col gap-2 py-2 mt-3 md:flex-row md:items-center md:justify-end md:gap-3 md:mt-0 md:py-0 md:ps-7">
+                        <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent link-success focus:outline-none" href="{{ route('admin-dashboard') }}" aria-current="page">Nyumbani</a>
+                        <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent link-success focus:outline-none" href="#">Wagombea</a>
+                        <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent link-success focus:outline-none" href="{{ route('admin-import-voters') }}">Wapiga Kura</a>
+                        <x-button tooltip-right="Ondoka kwenye akaunti" class="btn-circle btn-xs hover:bg-red-400" icon-right="o-power" spinner no-wire-navigate link="/admin/logout" />
+                    </div>
+                  </div>
+
+                </nav>
+            </header>
+
+            {{-- slot --}}
             {{ $slot }}
         </x-slot:content>
     </x-main>

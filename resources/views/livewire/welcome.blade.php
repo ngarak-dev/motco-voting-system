@@ -2,8 +2,8 @@
     <x-theme-changer class="hidden"></x-theme-changer>
     <h1>KARIBU KWENYE MFUMO WA UPIGAJI KURA</h1>
 
-    <x-card title="NENO SIRI" subtitle="Kila mpiga kura ataingia kwenye mfumo kwa kutumia namba yake ya usajili na neno siri ambalo ni mchanganyiko wa taarifa zake binafsi. Neno siri linajumuisha herufi ya kwanza ya jina la mpiga kura, mwaka wa kuzaliwa, mwezi wa kuzaliwa na kifupi cha aina ya program anayosoma."
-        class="max-w-6xl text-start" shadow separator>
+    <x-card title="NENO SIRI" class="max-w-6xl text-start" shadow separator>
+        <p class="border-bottom">Kila mpiga kura ataingia kwenye mfumo kwa kutumia namba yake ya usajili na neno siri ambalo ni mchanganyiko wa taarifa zake binafsi. Neno siri linajumuisha herufi ya kwanza ya jina la mpiga kura, mwaka wa kuzaliwa, mwezi wa kuzaliwa na kifupi cha aina ya program anayosoma.</p>
         <pre class="my-4">
             <u class="font-bold">MFANO</u>
             Jina la kwanza: JUMA
@@ -15,7 +15,7 @@
         </pre>
     </x-card>
 
-    <x-button label="INGIA KUPIGA KURA" class="rounded-none btn-primary btn-lg" icon-right="o-lock-closed" no-wire-navigate spinner link="/voter/sign-in" />
+    <x-button label="INGIA KUPIGA KURA" class="text-white rounded-none btn-success btn-lg" icon-right="o-lock-closed" no-wire-navigate spinner link="/voter/sign-in" />
 
     <style>
         h1 {

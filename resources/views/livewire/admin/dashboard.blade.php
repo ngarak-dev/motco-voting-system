@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <div class="grid grid-cols-4 gap-5">
+    {{-- <div class="grid grid-cols-4 gap-5">
 
         <div class="w-full px-5 py-4 truncate rounded-lg shadow bg-base-100 text-ellipsis">
             <div class="flex items-center gap-3">
@@ -16,24 +16,6 @@
             </div>
         </div>
 
-    </div>
-
-    {{-- <form action="{{ route('your-import-route') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <input type="file" name="file" accept=".xlsx,.csv" required>
-        <button type="submit">Import</button>
-    </form>
-
-    <form action="">
-        <x-file wire:model="file" label="Receipt" hint="Only PDF" accept="application/pdf" />
-    </form> --}}
-
-    <form wire:submit="importStudents">
-        <input type="file" wire:model="excel_file">
-
-        @error('excel_file') <span class="error">{{ $message }}</span> @enderror
-
-        <button type="submit">Upload</button>
-    </form>
+    </div> --}}
 
 </div>
