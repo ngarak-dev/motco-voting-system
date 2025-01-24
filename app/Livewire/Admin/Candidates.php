@@ -63,8 +63,15 @@ class Candidates extends Component {
         return redirect()->route('admin-candidates')->with('success', 'Jozi ya wagombea imeingia kwenye mfumo !');
     }
 
-    public function render()
-    {
+    public function removeCandidate ($string) {
+        $candidate = Candidate::find($string);
+        $candidate[0]->delete();
+
+        $this->success('Jozi ya wagombea imetolewa kwenye mfumo !');
+        return redirect()->route('admin-candidates')->with('success', 'Jozi ya wagombea imetolewa kwenye mfumo !');
+    }
+
+    public function render()   {
         return view('livewire.admin.candidates');
     }
 }

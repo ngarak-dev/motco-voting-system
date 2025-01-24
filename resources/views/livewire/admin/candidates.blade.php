@@ -1,9 +1,7 @@
 <div class="candidates">
     <x-card title="WAGOMBEA" class="my-4 border-2 border-green-500 rounded-sm " shadow separator>
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
-
             @if ($candidates->count() > 0)
-
                 @php
                     $president0 = \App\Models\Student::find($candidates[0]->president_id);
                     $vice0 = \App\Models\Student::find($candidates[0]->vice_id);
@@ -38,13 +36,12 @@
                         </x-card>
                     </div>
                     <div class="flex items-center justify-center">
-                        <x-button label="ONDOA JOZI HII" type='submit' icon-right="o-trash" spinner class="w-full max-w-md mb-2 rounded-none btn-error" />
+                        <button class="w-full max-w-md mb-2 text-white rounded-none btn btn-error" wire:click='removeCandidate({{ $candidates[0] }})' type="button" wire:confirm="Hakiki. Je unataka kumfuta mgombea?">ONDOA JOZI HII</button>
                     </div>
                 </div>
             @endif
 
             @if ($candidates->count() > 1)
-
                 @php
                     $president1 = \App\Models\Student::find($candidates[1]->president_id);
                     $vice1 = \App\Models\Student::find($candidates[1]->vice_id);
@@ -79,14 +76,11 @@
                         </x-card>
                     </div>
                     <div class="flex items-center justify-center">
-                        <x-button label="ONDOA JOZI HII" type='submit' icon-right="o-trash" spinner class="w-full max-w-md mb-2 rounded-none btn-error" />
+                        <button class="w-full max-w-md mb-2 text-white rounded-none btn btn-error" wire:click='removeCandidate({{ $candidates[1] }})' type="button" wire:confirm="Hakiki. Je unataka jozi hii ya wagombea?">ONDOA JOZI HII</button>
                     </div>
                 </div>
-
             @endif
-
         </div>
-
     </x-card>
 
     <x-card title="FOMU YA KUWEKA WAGOMBEA" class="my-4 border-2 border-black rounded-sm " shadow separator>
@@ -148,6 +142,5 @@
                 </div>
             </x-form>
         @endif
-
     </x-card>
 </div>
