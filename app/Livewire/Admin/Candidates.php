@@ -19,7 +19,7 @@ class Candidates extends Component {
     use WithFileUploads;
     use Toast;
 
-    public $students, $candidates, $test;
+    public $students, $candidates;
 
     #[Validate('required')]
     public $president_img;

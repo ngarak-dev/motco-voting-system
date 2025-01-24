@@ -24,7 +24,7 @@ class Student extends Authenticatable {
     ];
 
     public function registeredVoter() {
-        return $this->hasMany(RegisteredVoter::class);
+        return $this->hasOne(RegisteredVoter::class);
     }
 
     public function candidates() {
