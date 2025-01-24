@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('candidates', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('president_name');
-            $table->text('president_img');
-            $table->string('vice_name');
-            $table->text('vice_img');
-            $table->longText('policies');
+            $table->longText('president_img');
+            $table->longText('vice_img');
+            $table->foreignUlid('president_id')->unique()->constrained('students');
+            $table->foreignUlid('vice_id')->unique()->constrained('students');
             $table->timestamps();
         });
     }

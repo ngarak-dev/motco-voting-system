@@ -9,15 +9,18 @@ class Candidate extends Model {
     use HasUlids;
 
     protected $fillable = [
-        'president_name',
+        'president_id',
         'president_img',
-        'vice_name',
+        'vice_id',
         'vice_img',
-        'policies'
     ];
 
     public function registeredVoter() {
-        return $this->hasOne(Student::class);
+        return $this->belongsTo(RegisteredVoter::class);
+    }
+
+    public function student() {
+        return $this->belongsTo(Student::class);
     }
 
     /**

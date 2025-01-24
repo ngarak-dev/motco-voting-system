@@ -1,6 +1,6 @@
 <div>
-    <div class="flex justify-center mb-4">
-        <h1>UCHAGUZI WA SERIKALI YA WANACHUO 2025</h1>
+    <div class="flex items-center justify-center">
+        <h1 class="text-4xl font-bold text-white uppercase glowing-text ">UCHAGUZI WA SERIKALI YA WANACHUO {{ now()->year }}</h1>
     </div>
 
     <x-card>
@@ -16,27 +16,5 @@
             <b>BADO HAUJAPIGA KURA</b>
         </x-alert>
     </x-card>
-
-    <style>
-        h1 {
-            font-size: 3rem;
-            color: #ffffff;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            animation: textGlow 2s ease-in-out infinite alternate;
-        }
-
-        /* Glowing Text Animation */
-        @keyframes textGlow {
-            0% {
-                text-shadow: 0 0 15px #0b871c, 0 0 25px #0b871c, 0 0 35px #0b871c;
-            }
-            100% {
-                text-shadow: 0 0 15px #1abc9c, 0 0 25px #1abc9c, 0 0 35px #1abc9c;
-            }
-        }
-    </style>
 
 </div>

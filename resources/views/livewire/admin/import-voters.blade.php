@@ -1,7 +1,7 @@
 <div class="my-5">
     <x-card title="PANDISHA ORODHA YA WAPIGA KURA KWENYE MFUMO" class="my-4" shadow separator progress-indicator>
         <x-form wire:submit='importStudents'>
-            <x-file wire:model="excel_file" class=" focus" label="Weka orodha ya wapiga kura" hint="Excel Documents Only"
+            <x-file wire:model="excel_file" class="focus" required label="Weka orodha ya wapiga kura" hint="Excel Documents Only"
                 accept=".xls,.xlsx" />
 
                 @if ($is_uploading)
@@ -17,7 +17,7 @@
     <x-card>
         <x-header subtitle="REGISTERED VOTERS" class="text-xl text-bold" separator progress-indicator>
             <x-slot:middle class="!justify-end">
-                <x-input placeholder="Tafuta..." wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
+                <x-input placeholder="Tafuta..." class="input-sm" wire:model.live.debounce="search" clearable icon="o-magnifying-glass" />
             </x-slot:middle>
         </x-header>
 

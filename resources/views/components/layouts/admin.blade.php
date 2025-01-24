@@ -13,7 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen antialiased bg-base-200/50 dark:bg-base-200">
 
@@ -41,14 +41,17 @@
                   <div id="hs-navbar-header-floating" class="hidden overflow-hidden transition-all duration-300 hs-collapse basis-full grow md:block" aria-labelledby="hs-navbar-header-floating-collapse">
                     <div class="flex flex-col gap-2 py-2 mt-3 md:flex-row md:items-center md:justify-end md:gap-3 md:mt-0 md:py-0 md:ps-7">
                         <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent link-success focus:outline-none" href="{{ route('admin-dashboard') }}" aria-current="page">Nyumbani</a>
-                        <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent link-success focus:outline-none" href="#">Wagombea</a>
+                        <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent link-success focus:outline-none" href="{{ route('admin-candidates') }}">Wagombea</a>
                         <a class="py-0.5 md:py-3 px-4 md:px-1 border-s-2 md:border-s-0 md:border-b-2 border-transparent link-success focus:outline-none" href="{{ route('admin-import-voters') }}">Wapiga Kura</a>
                         <x-button tooltip-right="Ondoka kwenye akaunti" class="btn-circle btn-xs hover:bg-red-400" icon-right="o-power" spinner no-wire-navigate link="/admin/logout" />
                     </div>
                   </div>
-
                 </nav>
             </header>
+
+            <div class="flex items-center justify-center">
+                <h1 class="text-3xl font-bold text-white uppercase glowing-text ">UCHAGUZI WA SERIKALI YA WANACHUO {{ now()->year }}</h1>
+            </div>
 
             {{-- slot --}}
             {{ $slot }}

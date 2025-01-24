@@ -5,8 +5,10 @@ use App\Livewire\Admin\Dashboard;
 use App\Livewire\Admin\ImportVoters;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\Authentication;
+use App\Livewire\Admin\Candidates;
 use App\Livewire\Voter\Dashboard as VoterDashboard;
 use App\Livewire\Voter\Authentication as VoterAuthentication;
+use Illuminate\Notifications\Action;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +31,7 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth:web'])->prefix('admin')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('admin-dashboard');
     Route::get('/import-voters', ImportVoters::class)->name('admin-import-voters');
-
+    Route::get('/candidates', Candidates::class)->name('admin-candidates');
 
     Route::get('/logout', [Dashboard::class, 'logout'])->name('admin-logout');
 });
