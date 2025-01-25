@@ -4,11 +4,13 @@ namespace App\Livewire\Voter;
 
 use App\Models\Vote;
 use Mary\Traits\Toast;
+use App\Models\Student;
 use Livewire\Component;
 use App\Models\Candidate;
 use App\Models\RegisteredVoter;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Events\VoteCastEvent;
 
 class Dashboard extends Component {
     use Toast;
@@ -16,13 +18,17 @@ class Dashboard extends Component {
     public $candidates;
     public bool $hasVoted;
 
-    public $candidate;
+    public $candidate, $selectedCandidate;
+
+    public $president, $vice;
 
     public function mount () {
         $this->voter = auth()->guard('student')->user();
         $this->candidates = Candidate::with('student')->orderBy('id', 'asc')->get();
 
         $this->hasVoted = Auth::user()->registeredVoter?->voted;
+
+        if ($this->hasVoted) {$this->getSelectedCandidate();}
     }
 
     public function submitVote () {
@@ -38,8 +44,15 @@ class Dashboard extends Component {
 
         $thisVoter->save();
 
+        event(new VoteCastEvent($this->candidate));
+
         $this->success('Hongera umefanikiwa kupiga kura !');
         return redirect()->route('home');
+    }
+
+    public function getSelectedCandidate () {
+        $vote = Vote::where('voter_id', Auth::user()->registeredVoter->id)->first();
+        $this->selectedCandidate = $vote->candidate;
     }
 
     public function logout () {

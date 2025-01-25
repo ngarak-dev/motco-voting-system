@@ -15,9 +15,34 @@
         <p>Option: <b>{{ $voter->option }}</b></p>
 
         @if ($hasVoted)
-            <div class="flex justify-center h-20 mt-4 text-3xl font-bold text-center text-white bg-green-500 border border-green-600 align-self-center">
+            <div class="flex justify-center h-20 mt-4 text-3xl font-bold text-center text-white bg-green-500 border align-self-center">
                 <div class="flex items-center py-2">
                     <b>HONGERA UMESHAPIGA KURA 😊</b>
+                </div>
+            </div>
+
+            @php
+                $pr = \App\Models\Student::find($selectedCandidate->president_id);
+                $vc = \App\Models\Student::find($selectedCandidate->vice_id);
+            @endphp
+
+            <div class="flex justify-center">
+                <div class="grid grid-cols-2 gap-12 my-4">
+                    <div class="text-center president">
+                        <img src="{{ $selectedCandidate->president_img }}" alt="">
+                        <b> RAISI:</b>
+                        {{ $pr->first_name }}
+                        {{ $pr->middle_name }}
+                        {{ $pr->last_name }}
+                    </div>
+
+                    <div class="text-center vice">
+                        <img src="{{ $selectedCandidate->vice_img }}" alt="">
+                        <b> MAKAMU:</b>
+                        {{ $vc->first_name }}
+                        {{ $vc->middle_name }}
+                        {{ $vc->last_name }}
+                    </div>
                 </div>
             </div>
         @else

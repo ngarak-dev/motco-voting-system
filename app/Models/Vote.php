@@ -12,4 +12,12 @@ class Vote extends Model {
         'voter_id',
         'candidate_id'
     ];
+
+    public function voter () {
+        return $this->belongsTo(RegisteredVoter::class);
+    }
+
+    public function candidate() {
+        return $this->belongsTo(Candidate::class);
+    }
 }

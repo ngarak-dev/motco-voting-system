@@ -1,5 +1,5 @@
 <div class="flex items-center justify-center min-h-screen">
-    
+
     <style>
         body::before {
             background: url({{ asset('img/election.png') }}) no-repeat center center fixed !important;
@@ -18,8 +18,8 @@
         </x-header>
 
         <x-form wire:submit='login' class="flex flex-col items-center w-full">
-            <x-input class="w-full uppercase input-success input-lg" placeholder="Namba ya usajili" icon="o-user" wire:model="admission_number" type="text" />
-            <x-input class="w-full uppercase input-success input-lg" placeholder="Neno siri" icon="o-key" hint="" wire:model.defer='password' type="password" />
+            <x-input class="w-full uppercase input-success input-lg" oninput="this.value = this.value.toUpperCase();" placeholder="Namba ya usajili" icon="o-user" wire:model="admission_number" type="text" />
+            <x-input class="w-full uppercase input-success input-lg" oninput="this.value = this.value.toUpperCase();" placeholder="Neno siri" icon="o-key" hint="" wire:model.defer='password' type="password" />
 
             <x-button @click="$wire.infoModal = true" class="text-white btn-error">JINSI YA KUJUA NENO SIRI</x-button>
 

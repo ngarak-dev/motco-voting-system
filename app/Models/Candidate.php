@@ -23,6 +23,18 @@ class Candidate extends Model {
         return $this->belongsTo(Student::class);
     }
 
+    public function president() {
+        return $this->belongsTo(Student::class, 'president_id');
+    }
+
+    public function vice() {
+        return $this->belongsTo(Student::class, 'vice_id');
+    }
+
+    public function votes() {
+        return $this->hasMany(Vote::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *
