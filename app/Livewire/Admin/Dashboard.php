@@ -25,9 +25,10 @@ class Dashboard extends Component {
     public $noRegVoters;
 
     public $candidatesWithVotes;
-    protected $listeners = ['VoteCastEvent' => 'refreshVotes'];
 
     public $activeTab = 'mwanzo';
+
+    public array $optionsChart;
 
     public function setTab($tab){
         $this->activeTab = $tab;
@@ -45,8 +46,27 @@ class Dashboard extends Component {
         else {
             $this->candidatesWithVotes = [];
         }
-        // $candidatesWithVotes = Candidate::withCount('votes')
-        //     ->get(['president_id', 'vice_id','votes_count'])->toArray();
+
+        $this->optionsChart = [
+            'type' => 'bar',
+            'data' => [
+                'labels' => $this->candidatesWithVotes->pluck('president_name')->toArray(),
+                'datasets' => [
+                    [
+                        'label' => 'MATOKEO YA KURA KWA GRAFU',
+                        'data' => array_values($this->candidatesWithVotes->pluck('votes_count')->toArray()),
+                        'borderColor' => '#FFB1C1',
+                    ]
+                ],
+            ],
+            'options' => [
+                'animation' => true,
+                'color' => [
+                    'blue',
+                    'green',
+                ]
+            ]
+        ];
     }
 
     public function getTotalVotes() {
@@ -60,24 +80,25 @@ class Dashboard extends Component {
         $this->candidatesWithVotes = Candidate::with([
             'president:id,first_name,middle_name,last_name',
             'vice:id,first_name,middle_name,last_name'
-        ])->withCount('votes')->get(['id', 'president_id', 'vice_id', 'votes_count'])
+        ])->withCount('votes')->get(['id', 'president_id', 'vice_id', 'votes_count', 'president_img', 'vice_img'])
         ->map(function ($candidate) {
             return [
                 'id' => $candidate->id,
-                'president_name' => $candidate->president->first_name ." ". $candidate->president->middle_name ." ". $candidate->president->last_name ?? null,
-                'vice_name' => $candidate->vice->first_name ." ". $candidate->president->middle_name ." ". $candidate->president->last_name ?? null,
+                'candidates_name' => $candidate->president->first_name ." ". $candidate->president->last_name . " NA ". $candidate->vice->first_name ." ". $candidate->president->last_name ?? null,
                 'votes_count' => $candidate->votes_count,
-                'percentage' => ($candidate->votes_count / $this->totalVotes) * 100
+                'president_img' => $candidate->president_img,
+                'vice_img' => $candidate->vice_img,
+                'counts' => $candidate->votes_count,
+                'percentage' => $candidate->votes_count == 0 ? 0 : ($candidate->votes_count / $this->totalVotes) * 100
             ];
         });
     }
 
     #[On('refreshData')]
-    // #[On('echo:vote-cast,VoteCastEvent')]
     public function refreshVotes() {
         $this->getTotalVotes();
         $this->getRegTotalVoters();
-        $this->candidatesWithVotes();
+        // $this->candidatesWithVotes();
         logger('Event fired');
     }
 

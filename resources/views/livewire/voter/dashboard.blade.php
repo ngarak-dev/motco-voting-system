@@ -147,7 +147,7 @@
                         </div>
                     @endif
                 </div>
-                @empty($candidatesWithVotes)
+                @empty($candidates)
                     <div class="flex items-center justify-center p-6 my-6 border">
                         <div class="font-bold text-red-800 text-md whitespace-nowrap lg:text-xl">HAMNA WAGOMBEA</div>
                     </div>

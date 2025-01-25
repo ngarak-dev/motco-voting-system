@@ -1,5 +1,5 @@
 <div class="candidates">
-    <x-card title="WAGOMBEA" class="my-4 border-2 border-green-500 rounded-sm " shadow separator>
+    <x-card title="WAGOMBEA" class="border shadow-lg" shadow separator>
         <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
             @if ($candidates->count() > 0)
                 @php
@@ -83,7 +83,7 @@
         </div>
     </x-card>
 
-    <x-card title="FOMU YA KUWEKA WAGOMBEA" class="my-4 border-2 border-black rounded-sm " shadow separator>
+    <x-card title="FOMU YA KUWEKA WAGOMBEA" class="my-4 border shadow-lg" shadow separator>
         @if ($candidates->count() == 2)
             <x-button label="WAGOMBEA WOTE WAMESHASAJILIWA" type='submit' icon-right="o-check" spinner class="w-full mb-2 text-white rounded-none btn-lg btn-success" />
         @else

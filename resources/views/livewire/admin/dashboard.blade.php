@@ -1,20 +1,18 @@
 <div class="dashboard">
-
-    <div>
+    <div class="container mx-auto">
         <!-- Tab Buttons -->
-        <div class="flex border-b border-gray-200">
-            <button wire:click="setTab('mwanzo')" class="px-4 py-2 text-gray-600 border-b-2 border-transparent hover:text-gray-800 focus:outline-none"
-                :class="$activeTab === 'mwanzo' ? 'text-primary border-primary' : ''">MWANZO</button>
-            <button wire:click="setTab('takwimu')" class="px-4 py-2 text-gray-600 border-b-2 border-transparent hover:text-gray-800 focus:outline-none"
-                :class="$activeTab === 'takwimu' ? 'text-primary font-bold text-xl border-primary' : ''">TAKWIMU</button>
+        <div class="flex border-b border-gray-200 shadow bg-gray-50">
+            <button wire:click="setTab('mwanzo')" class="px-4 py-2 font-bold text-gray-600 border-b-2 border-transparent hover:text-gray-800 focus:outline-none">MWANZO</button>
+            <button wire:click="setTab('takwimu')" class="px-4 py-2 font-bold text-gray-600 border-b-2 border-transparent hover:text-gray-800 focus:outline-none">TAKWIMU</button>
         </div>
 
         <!-- Tab Content -->
-        <div class="my-6">
+        <div class="my-6 border shadow-lg">
             @if ($activeTab === 'mwanzo')
+                <div class="p-4 rounded-md shadow bg-gray-50">
                     <div class="mwanzo-tab">
                         <div class="flex items-center justify-center p-6 my-6 border">
-                            <div class="text-2xl font-bold text-gray-800 whitespace-nowrap lg:text-6xl">JUMLA YA KURA : {{ $totalVotes }}</div>
+                            <div class="text-2xl font-bold whitespace-nowrap lg:text-6xl">JUMLA YA KURA : {{ $totalVotes }}</div>
                         </div>
 
                         <div class="grid grid-cols-1 gap-5 lg:grid-cols-3 lg:gap-4">
@@ -28,7 +26,7 @@
                                     </div>
 
                                     <div class="text-left">
-                                        <div class="font-bold text-gray-800 text-md whitespace-nowrap lg:text-xl">JUMLA YA WAPIGA KURA</div>
+                                        <div class="font-bold text-md whitespace-nowrap lg:text-xl">JUMLA YA WAPIGA KURA</div>
                                         <div class="text-xl font-black">{{ $noVoters }}</div>
                                     </div>
                                 </div>
@@ -44,7 +42,7 @@
                                     </div>
 
                                     <div class="text-left">
-                                        <div class="font-bold text-gray-800 text-md whitespace-nowrap lg:text-xl">WALIOJISAJILI KUPIGA KURA</div>
+                                        <div class="font-bold text-md whitespace-nowrap lg:text-xl">WALIOJISAJILI KUPIGA KURA</div>
 
                                     <div class="text-xl font-black">{{ $noRegVoters }}</div>
                                     </div>
@@ -61,7 +59,7 @@
                                     </div>
 
                                     <div class="text-left">
-                                        <div class="font-bold text-gray-800 text-md whitespace-nowrap lg:text-xl">WALIOPIGA KURA</div>
+                                        <div class="font-bold text-md whitespace-nowrap lg:text-xl">WALIOPIGA KURA</div>
                                         <div class="text-xl font-black">{{ $totalVotes }}</div>
                                     </div>
                                 </div>
@@ -69,84 +67,48 @@
 
                         </div>
 
-                        <div id="chartContainer" class="w-full my-6"></div>
-                    </div>
+                        @empty($candidatesWithVotes)
+                            <div class="flex items-center justify-center p-6 my-6 border">
+                                <div class="font-bold text-red-800 text-md whitespace-nowrap lg:text-xl">HAMNA KURA ILIYOPIGWA</div>
+                            </div>
+                        @else
+                            <div class="flex items-center justify-center p-6 mt-4 border">
+                                <div class="font-bold text-blue-500 text-md whitespace-nowrap lg:text-xl">
+                                    MGAWANYO WA KURA KWA ASILIMIA
+                                </div>
+                            </div>
 
+                            <div class="grid grid-cols-1 gap-5 lg:grid-cols-2 lg:gap-4">
+                                @foreach ($candidatesWithVotes as $candidate)
+                                    <div class="flex items-center justify-start p-2 my-2 border border-secondary">
+                                        <x-avatar class="!w-14" :image="$candidate['president_img']" />
+                                        <x-avatar class="!w-14" :image="$candidate['vice_img']" />
+                                        <div class="font-bold text-green-500 text-md whitespace-nowrap lg:text-xl">
+                                            <span class="ml-3">{{ $candidate['candidates_name'] }}</span>
+                                        </div>
+                                        <span class="ml-4" style="font-family: 'Gloock', sans-serif; font-size: 3em;">{{ $candidate['percentage'] }}%</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endempty
+                    </div>
+                </div>
             @elseif ($activeTab === 'takwimu')
                 <div class="p-4 rounded-lg shadow bg-gray-50">
                     <h2 class="text-xl font-bold">TAKWIMU</h2>
-                    <p class="text-gray-600">This is the content of the second tab.</p>
+                    <p class="text-gray-600">Pie charts zinakaa hapa.</p>
                 </div>
             @endif
         </div>
     </div>
 
-    <script src="{{ asset('canvasjs.min.js') }}"></script>
-
-    @empty($candidatesWithVotes)
-        <div class="flex items-center justify-center p-6 my-6 border">
-            <div class="font-bold text-red-800 text-md whitespace-nowrap lg:text-xl">HAMNA KURA ILIYOPIGWA</div>
-        </div>
-    @else
-        <script>
-            window.onload = function () {
-
-                var candidatesWithVotes = [
-                    { president_name: "{{ $candidatesWithVotes[0]['president_name'] }} NA {{ $candidatesWithVotes[0]['vice_name'] }}", votes_count: {{ $candidatesWithVotes[0]['votes_count'] }} },
-                    { president_name: "{{ $candidatesWithVotes[1]['president_name'] }} NA {{ $candidatesWithVotes[1]['vice_name'] }}", votes_count: {{ $candidatesWithVotes[1]['votes_count'] }} }
-                ];
-
-                var totalVotes = candidatesWithVotes.reduce(function (sum, candidate) {
-                    return sum + candidate.votes_count;
-                }, 0);
-
-                var dataPoints = candidatesWithVotes.map(function (candidate, index) {
-                    var percentage = (candidate.votes_count / totalVotes) * 100;
-                    return {
-                        y: percentage,
-                        label: candidate.president_name,
-                        toolTipContent: `${candidate.president_name}: ${candidate.votes_count} votes (${percentage.toFixed(2)}%)`,
-                        color: index === 0 ? "green" : "orange"
-                    };
-                });
-
-                var chart = new CanvasJS.Chart("chartContainer", {
-                    animationEnabled: true,
-                    theme: "light2",
-                    backgroundColor: "transparent",
-                    axisY: {
-                        title: "Percentage of Total Votes (%)",
-                        maximum: 100
-                    },
-                    data: [{
-                        type: "column",
-                        showInLegend: true,
-                        legendMarkerColor: "grey",
-                        legendText: "WAGOMBEA",
-                        dataPoints: dataPoints
-                    }]
-                });
-
-                chart.render();
-            }
-        </script>
-    @endempty
-
-    @script
-        <script>
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('b4264cebe39a27279e4e', {
-            cluster: 'mt1'
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setInterval(() => {
+                console.log('Refreshing data...');
+                // $wire.dispatchSelf('refreshData');
+                @this.dispatchSelf('refreshData');
+            }, 180000); // 3 minutes
         });
-
-        var channel = pusher.subscribe('vote-cast');
-            channel.bind('VoteCastEvent', function(data) {
-            // alert(JSON.stringify(data));
-            $wire.dispatchSelf('refreshData');
-        });
-        </script>
-    @endscript
-
+    </script>
 </div>

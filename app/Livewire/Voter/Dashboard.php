@@ -28,7 +28,7 @@ class Dashboard extends Component {
 
         $this->hasVoted = Auth::user()->registeredVoter?->voted;
 
-        if ($this->hasVoted) {$this->getSelectedCandidate();}
+        $this->hasVoted ? $this->getSelectedCandidate() : null;
     }
 
     public function submitVote () {
@@ -45,7 +45,7 @@ class Dashboard extends Component {
         $thisVoter->save();
 
         // event(new VoteCastEvent($this->candidate));
-        broadcast(new VoteCastEvent($this->candidate))->toOthers();
+        // broadcast(new VoteCastEvent($this->candidate))->toOthers();
 
         $this->success('Hongera umefanikiwa kupiga kura !');
         return redirect()->route('home');

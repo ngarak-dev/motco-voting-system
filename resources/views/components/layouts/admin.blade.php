@@ -16,7 +16,33 @@
      @vite(['resources/css/app.css', 'resources/js/app.js'])
 
      <script src="{{ asset('jquery-3.2.1.min.js') }}"></script>
-     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+     <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
+
+     <style>
+        body {
+            position: relative;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url({{ asset('img/logo_kura.svg') }}) no-repeat center center fixed;
+            background-size: contain;
+            filter: blur(4px);
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .x-main {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+
 </head>
 <body class="min-h-screen antialiased bg-base-200/50 dark:bg-base-200">
 
@@ -32,7 +58,7 @@
             </div>
 
             <header class="sticky inset-x-0 top-0 z-50 flex flex-wrap w-full text-sm md:justify-start md:flex-nowrap">
-                <nav class="relative max-w-2xl w-full border border-gray-200 shadow-md rounded-[2rem] mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto">
+                <nav class="relative max-w-2xl w-full border border-gray-200 shadow-md rounded-[2rem] mx-2 py-2.5 md:flex md:items-center md:justify-between md:py-0 md:px-4 md:mx-auto bg-gray-50">
                   <div class="flex items-center justify-between px-4 md:px-0">
                     <div class="flex items-center">
                       <a class="flex-none inline-block font-semibold rounded-mdfocus:outline-none focus:opacity-80" href="{{ route('admin-dashboard') }}" aria-label="Logo">

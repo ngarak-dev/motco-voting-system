@@ -1,5 +1,5 @@
-<div class="my-5">
-    <x-card title="PANDISHA ORODHA YA WAPIGA KURA KWENYE MFUMO" class="my-4" shadow separator progress-indicator>
+<div class="import-vorters">
+    <x-card title="PANDISHA ORODHA YA WAPIGA KURA KWENYE MFUMO" shadow separator progress-indicator>
         <x-form wire:submit='importStudents'>
             <x-file wire:model="excel_file" class="focus" required label="Weka orodha ya wapiga kura" hint="Excel Documents Only"
                 accept=".xls,.xlsx" />
