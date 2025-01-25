@@ -29,8 +29,12 @@ class Dashboard extends Component {
         $this->noVoters = Student::count();
         $this->getRegTotalVoters();
 
-        $this->candidatesWithVotes();
-
+        if ($this->totalVotes > 0) {
+            $this->candidatesWithVotes();
+        }
+        else {
+            $this->candidatesWithVotes = [];
+        }
         // $candidatesWithVotes = Candidate::withCount('votes')
         //     ->get(['president_id', 'vice_id','votes_count'])->toArray();
     }

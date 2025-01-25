@@ -67,7 +67,7 @@
 
     <script src="{{ asset('canvasjs.min.js') }}"></script>
 
-    {{-- <script>
+    {{-- <>
         window.onload = function () {
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
@@ -90,49 +90,53 @@
         }
     </script> --}}
 
-    @if ($candidatesWithVotes->count() > 1)
-    <script>
-        window.onload = function () {
+    @empty($candidatesWithVotes)
+        <div class="flex items-center justify-center p-6 my-6 border">
+            <div class="font-bold text-red-800 text-md whitespace-nowrap lg:text-xl">HAMNA KURA ILIYOPIGWA</div>
+        </div>
+    @else
+        <script>
+            window.onload = function () {
 
-            var candidatesWithVotes = [
-                { president_name: "{{ $candidatesWithVotes[0]['president_name'] }} NA {{ $candidatesWithVotes[0]['vice_name'] }}", votes_count: {{ $candidatesWithVotes[0]['votes_count'] }} },
-                { president_name: "{{ $candidatesWithVotes[1]['president_name'] }} NA {{ $candidatesWithVotes[1]['vice_name'] }}", votes_count: {{ $candidatesWithVotes[1]['votes_count'] }} }
-            ];
+                var candidatesWithVotes = [
+                    { president_name: "{{ $candidatesWithVotes[0]['president_name'] }} NA {{ $candidatesWithVotes[0]['vice_name'] }}", votes_count: {{ $candidatesWithVotes[0]['votes_count'] }} },
+                    { president_name: "{{ $candidatesWithVotes[1]['president_name'] }} NA {{ $candidatesWithVotes[1]['vice_name'] }}", votes_count: {{ $candidatesWithVotes[1]['votes_count'] }} }
+                ];
 
-            var totalVotes = candidatesWithVotes.reduce(function (sum, candidate) {
-                return sum + candidate.votes_count;
-            }, 0);
+                var totalVotes = candidatesWithVotes.reduce(function (sum, candidate) {
+                    return sum + candidate.votes_count;
+                }, 0);
 
-            var dataPoints = candidatesWithVotes.map(function (candidate, index) {
-                var percentage = (candidate.votes_count / totalVotes) * 100;
-                return {
-                    y: percentage,
-                    label: candidate.president_name,
-                    toolTipContent: `${candidate.president_name}: ${candidate.votes_count} votes (${percentage.toFixed(2)}%)`,
-                    color: index === 0 ? "green" : "orange"
-                };
-            });
+                var dataPoints = candidatesWithVotes.map(function (candidate, index) {
+                    var percentage = (candidate.votes_count / totalVotes) * 100;
+                    return {
+                        y: percentage,
+                        label: candidate.president_name,
+                        toolTipContent: `${candidate.president_name}: ${candidate.votes_count} votes (${percentage.toFixed(2)}%)`,
+                        color: index === 0 ? "green" : "orange"
+                    };
+                });
 
-            var chart = new CanvasJS.Chart("chartContainer", {
-                animationEnabled: true,
-                theme: "light2",
-                backgroundColor: "transparent",
-                axisY: {
-                    title: "Percentage of Total Votes (%)",
-                    maximum: 100
-                },
-                data: [{
-                    type: "column",
-                    showInLegend: true,
-                    legendMarkerColor: "grey",
-                    legendText: "WAGOMBEA",
-                    dataPoints: dataPoints
-                }]
-            });
+                var chart = new CanvasJS.Chart("chartContainer", {
+                    animationEnabled: true,
+                    theme: "light2",
+                    backgroundColor: "transparent",
+                    axisY: {
+                        title: "Percentage of Total Votes (%)",
+                        maximum: 100
+                    },
+                    data: [{
+                        type: "column",
+                        showInLegend: true,
+                        legendMarkerColor: "grey",
+                        legendText: "WAGOMBEA",
+                        dataPoints: dataPoints
+                    }]
+                });
 
-            chart.render();
-        }
-    </script>
-    @endif
+                chart.render();
+            }
+        </script>
+    @endempty
 
 </div>
