@@ -67,6 +67,30 @@
 
     <script src="{{ asset('canvasjs.min.js') }}"></script>
 
+    {{-- <script>
+        window.onload = function () {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Matokeo ya Uchaguzi"
+                },
+                data: [{
+                    type: "doughnut",
+                    indexLabel: "{label}: {y}",
+                    startAngle: -90,
+                    dataPoints: [
+                        { y: {{ $totalVotes }}, label: "Waliopiga Kura" },
+                        { y: {{ $noVoters }}, label: "Wapiga Kura" },
+                        { y: {{ $noRegVoters }}, label: "Waliojisajili" }
+                    ]
+                }]
+            });
+            chart.render();
+        }
+    </script> --}}
+
+    @if ($candidatesWithVotes->count() > 1)
     <script>
         window.onload = function () {
 
@@ -109,5 +133,6 @@
             chart.render();
         }
     </script>
+    @endif
 
 </div>
