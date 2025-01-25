@@ -32,11 +32,13 @@ class VoteCastEvent implements ShouldBroadcast
 
     public function broadcastOn()
     {
-        return ['vote-cast'];
+        return [
+            new Channel('vote-cast') //broadcasting channel
+        ];
     }
 
     public function broadcastAs()
     {
-        return 'VoteCastEvent';
+        return 'VoteCastEvent'; //broadcasting name
     }
 }

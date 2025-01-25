@@ -14,6 +14,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
 
      @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+     <script src="{{ asset('jquery-3.2.1.min.js') }}"></script>
+     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
 <body class="min-h-screen antialiased bg-base-200/50 dark:bg-base-200">
 

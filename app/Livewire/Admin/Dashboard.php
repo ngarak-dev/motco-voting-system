@@ -7,11 +7,15 @@ use Mary\Traits\Toast;
 use App\Models\Student;
 use Livewire\Component;
 use App\Models\Candidate;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Title;
 use App\Models\RegisteredVoter;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 
 #[Layout('components.layouts.admin')]
+#[Title('Nyumbani')]
+
 class Dashboard extends Component {
 
     use Toast;
@@ -21,7 +25,13 @@ class Dashboard extends Component {
     public $noRegVoters;
 
     public $candidatesWithVotes;
-    protected $listeners = ['voteCast' => 'refreshVotes'];
+    protected $listeners = ['VoteCastEvent' => 'refreshVotes'];
+
+    public $activeTab = 'mwanzo';
+
+    public function setTab($tab){
+        $this->activeTab = $tab;
+    }
 
     public function mount() {
         $this->getTotalVotes();
@@ -61,9 +71,14 @@ class Dashboard extends Component {
             ];
         });
     }
+
+    #[On('refreshData')]
+    // #[On('echo:vote-cast,VoteCastEvent')]
     public function refreshVotes() {
         $this->getTotalVotes();
         $this->getRegTotalVoters();
+        $this->candidatesWithVotes();
+        logger('Event fired');
     }
 
     public function logout () {

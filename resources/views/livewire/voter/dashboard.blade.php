@@ -17,7 +17,7 @@
         @if ($hasVoted)
             <div class="flex justify-center h-20 mt-4 text-3xl font-bold text-center text-white bg-green-500 border align-self-center">
                 <div class="flex items-center py-2">
-                    <b>HONGERA UMESHAPIGA KURA 😊</b>
+                    <b>HONGERA UMESHAPIGA KURA 😊. UMEMCHAGUA</b>
                 </div>
             </div>
 
@@ -147,9 +147,15 @@
                         </div>
                     @endif
                 </div>
-                <div class="mt-6 text-center">
-                    <button type="submit" class="w-full mb-2 text-white rounded-none btn btn-success btn-lg">THIBITISHA CHAGUO LAKO</button>
-                </div>
+                @empty($candidatesWithVotes)
+                    <div class="flex items-center justify-center p-6 my-6 border">
+                        <div class="font-bold text-red-800 text-md whitespace-nowrap lg:text-xl">HAMNA WAGOMBEA</div>
+                    </div>
+                @else
+                    <div class="mt-6 text-center">
+                        <button type="submit" class="w-full mb-2 text-white rounded-none btn btn-success btn-lg">THIBITISHA CHAGUO LAKO</button>
+                    </div>
+                @endempty
             </form>
         </x-card>
     @endif

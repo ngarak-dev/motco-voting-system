@@ -44,7 +44,8 @@ class Dashboard extends Component {
 
         $thisVoter->save();
 
-        event(new VoteCastEvent($this->candidate));
+        // event(new VoteCastEvent($this->candidate));
+        broadcast(new VoteCastEvent($this->candidate))->toOthers();
 
         $this->success('Hongera umefanikiwa kupiga kura !');
         return redirect()->route('home');
