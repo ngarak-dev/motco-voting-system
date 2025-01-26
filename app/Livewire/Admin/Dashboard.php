@@ -10,6 +10,7 @@ use App\Models\Candidate;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use App\Models\RegisteredVoter;
+use Illuminate\Container\Attributes\Log;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 
@@ -101,6 +102,46 @@ class Dashboard extends Component {
         $this->getRegTotalVoters();
         $this->candidatesWithVotes();
         logger('Event fired');
+    }
+
+    public function getFullStats() {
+        try {
+            $candidatesVotes = Candidate::with([
+                'president:id,first_name,last_name',
+                'vice:id,first_name,last_name'
+                ])->withCount('votes')->get(['id', 'president_id', 'vice_id', 'votes_count'])
+                ->map(function ($candidate) {
+                    return [
+                        'id' => $candidate->id,
+                        'candidates_name' => $candidate->president->first_name ." ". $candidate->president->last_name . " NA ". $candidate->vice->first_name ." ". $candidate->president->last_name ?? null,
+                        'vote_count' => $candidate->votes_count,
+                    ];
+                });
+
+            //Number of students who are not in registered voters
+            $nonRegisteredVoters = Student::whereNotIn('id', RegisteredVoter::pluck('student_id'))->count();
+            //Registered voters who have not voted
+            $registeredNotVoted = RegisteredVoter::whereNotIn('student_id', Vote::pluck('voter_id'))->count();
+
+            return [
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'Data fetched successfully',
+                'data' => [
+                    'candidatesVotes' => $candidatesVotes,
+                    'nonRegisteredVoters' => $nonRegisteredVoters,
+                    'registeredNotVoted' => $registeredNotVoted
+                ]
+            ];
+        }
+        catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'code' => 500,
+                'message' => 'An error occurred while processing your request',
+                'debug_message' => $th->getMessage()
+            ]);
+        }
     }
 
     public function logout () {

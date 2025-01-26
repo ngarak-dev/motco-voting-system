@@ -96,7 +96,20 @@
             @elseif ($activeTab === 'takwimu')
                 <div class="p-4 rounded-lg shadow bg-gray-50">
                     <h2 class="text-xl font-bold">TAKWIMU</h2>
-                    <p class="text-gray-600">Pie charts zinakaa hapa.</p>
+
+                    <div class="w-full p-2 mx-auto my-8 bg-white rounded-md shadow-md">
+                        <h2 class="mb-4 text-xl text-center">IDADI YA KURA</h2>
+                        <div class="flex items-center justify-center">
+                            <div id="votesCountLoader" class="w-4 h-4 text-center border-4 border-blue-600 rounded-full loader border-t-transparent animate-spin"></div>
+                        </div>
+
+                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                            <div class="w-full" style="height: 500px; width: :100%; margin: 0 auto;">
+                                <canvas id="votesCountChart"></canvas>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             @endif
         </div>
@@ -110,5 +123,88 @@
                 @this.dispatchSelf('refreshData');
             }, 180000); // 3 minutes
         });
+    </script>
+
+    <script>
+        window.onload = function() {
+            fetchAllStats();
+        };
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     fetchAllStats();
+        // });
+
+        function fetchAllStats () {
+            fetch('{{ route('get-full-stats') }}')
+                .then(response => response.json())
+                .then(response => {
+                    if (response.code) {
+                        console.log(response);
+                        //Load chart
+                        setTimeout(function() {
+                            createBarChart(response);
+                        }, 10000);
+                    }
+                    else {
+                        console.error(response);
+                    }
+                })
+            .catch(error => {
+                console.error('Error fetching statistics:', error);
+            });
+        }
+
+        function createBarChart (responseData) {
+            const candidates = responseData.data.candidatesVotes.map(candidate => candidate.candidates_name);
+            const voteCounts = responseData.data.candidatesVotes.map(candidate => candidate.vote_count);
+            const nonRegisteredVoters = responseData.data.nonRegisteredVoters;
+            const registeredNotVoted = responseData.data.registeredNotVoted;
+
+            // Add additional categories
+            candidates.push("Non-Registered Voters", "Registered Not Voted");
+            voteCounts.push(nonRegisteredVoters, registeredNotVoted);
+
+            const ctx = document.getElementById('votesCountChart').getContext('2d');
+
+            const votesCountChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: candidates,
+                    datasets: [{
+                        label: 'Votes Count',
+                        data: voteCounts,
+                        backgroundColor: [
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        tooltip: {
+                            enabled: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     </script>
 </div>
