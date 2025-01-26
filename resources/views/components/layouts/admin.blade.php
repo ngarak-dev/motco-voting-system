@@ -16,7 +16,8 @@
      @vite(['resources/css/app.css', 'resources/js/app.js'])
 
      <script src="{{ asset('jquery-3.2.1.min.js') }}"></script>
-     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+     <script src="{{ asset('chart.umd.min.js') }}"></script>
+     <script src="{{ asset('chartjs-plugin-datalabels.js') }}"></script>
      <link href="https://fonts.googleapis.com/css2?family=Gloock&display=swap" rel="stylesheet">
 
      <style>

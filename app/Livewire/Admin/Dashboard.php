@@ -121,7 +121,7 @@ class Dashboard extends Component {
             //Number of students who are not in registered voters
             $nonRegisteredVoters = Student::whereNotIn('id', RegisteredVoter::pluck('student_id'))->count();
             //Registered voters who have not voted
-            $registeredNotVoted = RegisteredVoter::whereNotIn('student_id', Vote::pluck('voter_id'))->count();
+            $registeredNotVoted = RegisteredVoter::where('voted', 0)->count();
 
             return [
                 'status' => 'success',

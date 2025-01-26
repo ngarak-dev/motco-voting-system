@@ -126,12 +126,12 @@
     </script>
 
     <script>
-        window.onload = function() {
-            fetchAllStats();
-        };
-        // document.addEventListener('DOMContentLoaded', function() {
+        // window.onload = function() {
         //     fetchAllStats();
-        // });
+        // };
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchAllStats();
+        });
 
         function fetchAllStats () {
             fetch('{{ route('get-full-stats') }}')
@@ -142,7 +142,7 @@
                         //Load chart
                         setTimeout(function() {
                             createBarChart(response);
-                        }, 10000);
+                        }, 5000);
                     }
                     else {
                         console.error(response);
@@ -173,37 +173,103 @@
                         label: 'Votes Count',
                         data: voteCounts,
                         backgroundColor: [
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)',
-                            'rgba(255, 99, 132, 0.2)',
+                            '#4CAF50', '#2196F3', '#FFC107','#FF5722',
                         ],
                         borderColor: [
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)',
-                            'rgba(255, 99, 132, 1)',
+                            '#4CAF50', '#2196F3', '#FFC107','#FF5722',
                         ],
-                        borderWidth: 1
+                        borderWidth: 2,
                     }]
                 },
+
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     plugins: {
                         legend: {
                             display: true,
-                            position: 'top'
+                            labels: {
+                                color: '#333',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                }
+                            },
+                            position: 'top',
                         },
                         tooltip: {
-                            enabled: true
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    let value = tooltipItem.raw;
+                                    return `${tooltipItem.label}: ${value}`;
+                                }
+                            }
+                        },
+
+                        // Plugin to display numbers on bars
+                        datalabels: {
+                            display: true,
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: (value, context) => {
+                                return `KURA ${value}`;
+                            },
+                            color: '#000',
+                            font: {
+                                size: 14,
+                                weight: 'bold'
+                            }
                         }
                     },
                     scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#555',
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
                         y: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            grid: {
+                                color: '#ddd',
+                                lineWidth: 0.8,
+                                borderDash: [5, 5]
+                            },
+                            ticks: {
+                                color: '#555',
+                                font: {
+                                    size: 12
+                                },
+                                // stepSize: Math.ceil(total / 5),
+                            },
+                            title: {
+                                display: true,
+                                text: 'Number of Votes',
+                                color: '#333',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
+                        }
+                    },
+                    animation: {
+                        duration: 1000,
+                        easing: 'easeOutBounce'
+                    },
+                    layout: {
+                        padding: {
+                            top: 20,
+                            bottom: 10
                         }
                     }
-                }
+                },
+                plugins: [ChartDataLabels] // Plugin to display numbers
             });
         }
     </script>
