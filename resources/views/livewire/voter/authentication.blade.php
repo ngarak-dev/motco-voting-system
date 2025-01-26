@@ -35,7 +35,7 @@
             <pre class="my-4">
                 <u class="font-bold">MFANO</u>
                 Jina la kwanza: JUMA
-                Tarehe ya kuzaliwa: 11.02.2000
+                Tarehe ya kuzaliwa: 02.11.2000
                 Programu: <b>SD</b> yaani SPECIAL / <b>OD</b> yaani NORMAL
 
                 <i>Mchanganyiko</i>: HERUFI YA KWANZA YA JINA, MWAKA WA KUZALIWA,

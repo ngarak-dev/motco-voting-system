@@ -89,7 +89,8 @@ class Dashboard extends Component {
                 'president_img' => $candidate->president_img,
                 'vice_img' => $candidate->vice_img,
                 'counts' => $candidate->votes_count,
-                'percentage' => $candidate->votes_count == 0 ? 0 : ($candidate->votes_count / $this->totalVotes) * 100
+                // 'percentage' => round(($candidate->votes_count == 0 ? 0 : ($candidate->votes_count / $this->totalVotes) * 100) * 100, 2),
+                'percentage' => $candidate->votes_count == 0 ? 0 : number_format(($candidate->votes_count / $this->totalVotes) * 100, 1)
             ];
         });
     }
@@ -98,7 +99,7 @@ class Dashboard extends Component {
     public function refreshVotes() {
         $this->getTotalVotes();
         $this->getRegTotalVoters();
-        // $this->candidatesWithVotes();
+        $this->candidatesWithVotes();
         logger('Event fired');
     }
 

@@ -72,7 +72,7 @@
                                     <img src="{{ $candidates[0]->president_img }}" class="object-cover w-full">
                                     <div class="p-3 bg-gray-100">
                                         <h3 class="text-lg font-bold">
-                                            {{ $president0->middle_name }} {{ $president0->first_name }} {{ $president0->last_name }}
+                                            {{ $president0->first_name }} {{ $president0->middle_name }} {{ $president0->last_name }}
                                         </h3>
                                         <p>{{ $president0->admission_number }} | <span class="font-bold text-green-500">{{ $president0->option }}</span></p>
                                     </div>
@@ -85,7 +85,7 @@
                                     <img src="{{ $candidates[0]->vice_img }}" class="object-cover w-full">
                                     <div class="p-3 bg-gray-100">
                                         <h3 class="text-lg font-bold">
-                                            {{ $vice0->middle_name }} {{ $vice0->first_name }} {{ $vice0->last_name }}
+                                            {{ $vice0->first_name }} {{ $vice0->middle_name }} {{ $vice0->last_name }}
                                         </h3>
                                         <p>{{ $vice0->admission_number }} | <span class="font-bold text-green-500">{{ $vice0->option }}</span></p>
                                     </div>
@@ -117,7 +117,7 @@
                                     <img src="{{ $candidates[1]->president_img }}" class="object-cover w-full">
                                     <div class="p-3 bg-gray-100">
                                         <h3 class="text-lg font-bold">
-                                            {{ $president1->middle_name }} {{ $president1->first_name }} {{ $president1->last_name }}
+                                             {{ $president1->first_name }} {{ $president1->middle_name }} {{ $president1->last_name }}
                                         </h3>
                                         <p>{{ $president1->admission_number }} | <span class="font-bold text-green-500">{{ $president1->option }}</span></p>
                                     </div>
@@ -130,7 +130,7 @@
                                     <img src="{{ $candidates[1]->vice_img }}" class="object-cover w-full">
                                     <div class="p-3 bg-gray-100">
                                         <h3 class="text-lg font-bold">
-                                            {{ $vice1->middle_name }} {{ $vice1->first_name }} {{ $vice1->last_name }}
+                                            {{ $vice1->first_name }} {{ $vice1->middle_name }} {{ $vice1->last_name }}
                                         </h3>
                                         <p>{{ $vice1->admission_number }} | <span class="font-bold text-green-500">{{ $vice1->option }}</span></p>
                                     </div>
