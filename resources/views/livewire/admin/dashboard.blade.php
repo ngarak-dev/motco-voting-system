@@ -110,6 +110,43 @@
                         </div>
 
                     </div>
+
+                    <hr>
+
+                    <div class="grid grid-cols-1 gap-4 my-6 lg:grid-cols-2 lg:gap-6">
+
+                        <div class="w-full p-2 mx-auto bg-white rounded-md shadow-md">
+                            <h2 class="mb-4 text-xl text-center">MWAKA WA MASOMO</h2>
+                            <div class="flex items-center justify-center">
+                                <div id="byYearLoader" class="w-4 h-4 text-center border-4 border-blue-600 rounded-full loader border-t-transparent animate-spin"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div style="width: 60%; max-width: 300px;">
+                                    <canvas id="byYearPieChart"></canvas>
+                                </div>
+                                <div id="byYearStats" style="width: 35%; margin-left: 20px;">
+                                    {{-- Numbers will appear here --}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full p-2 mx-auto bg-white rounded-md shadow-md">
+                            <h2 class="mb-4 text-xl text-center">JINSIA</h2>
+                            <div class="flex items-center justify-center">
+                                <div id="bySexLoader" class="w-4 h-4 text-center border-4 border-blue-600 rounded-full loader border-t-transparent animate-spin"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <div style="width: 60%; max-width: 300px;">
+                                    <canvas id="bySexPieChart"></canvas>
+                                </div>
+                                <div id="bySexStats" style="width: 35%; margin-left: 20px;">
+                                    {{-- Numbers will appear here --}}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             @endif
         </div>
@@ -142,6 +179,15 @@
                         //Load chart
                         setTimeout(function() {
                             createBarChart(response);
+
+                        const sexLabels = Object.keys(response.data.votersBySex);
+                        const sexValues = Object.values(response.data.votersBySex);
+                        createPieChart(sexLabels, sexValues, 'MWAKA WA MASOMO', 'bySexPieChart', 'bySexStats');
+
+                        const yearLabels = Object.keys(response.data.votersByYear);
+                        const yearValues = Object.values(response.data.votersByYear);
+                        createPieChart(yearLabels, yearValues, 'JINSIA', 'byYearPieChart', 'byYearStats');
+
                         }, 5000);
                     }
                     else {
@@ -160,7 +206,7 @@
             const registeredNotVoted = responseData.data.registeredNotVoted;
 
             // Add additional categories
-            candidates.push("Non-Registered Voters", "Registered Not Voted");
+            candidates.push("WASIOSHIRIKI", "ZILIZOHARIBIKA");
             voteCounts.push(nonRegisteredVoters, registeredNotVoted);
 
             const ctx = document.getElementById('votesCountChart').getContext('2d');
@@ -229,7 +275,8 @@
                             ticks: {
                                 color: '#555',
                                 font: {
-                                    size: 12
+                                    size: 14,
+                                    weight: 'bold'
                                 }
                             }
                         },
@@ -271,6 +318,56 @@
                 },
                 plugins: [ChartDataLabels] // Plugin to display numbers
             });
+
+            document.getElementById('votesCountLoader').classList.add('hidden');
+        }
+
+        function createPieChart(labels, values, statTitle, pieChartId, statsContainerId) {
+            const ctx = document.getElementById(pieChartId).getContext('2d');
+
+            const statsContainer = document.getElementById(statsContainerId);
+            statsContainer.innerHTML = '';
+
+            let total = values.reduce((sum, val) => sum + val, 0);
+            labels.forEach((label, index) => {
+                let percentage = ((values[index] / total) * 100).toFixed(2);
+                let statItem = document.createElement('div');
+                statItem.style.marginBottom = '10px';
+                statItem.innerHTML = `<i>${label}:</i> <strong>${values[index]}</strong>`;
+                statsContainer.appendChild(statItem);
+            });
+
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: statTitle,
+                        data: values,
+                        borderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(tooltipItem) {
+                                    let value = tooltipItem.raw;
+                                    let percentage = ((value / total) * 100).toFixed(2);
+                                    return `${tooltipItem.label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    },
+                }
+            });
+
+            document.getElementById('bySexLoader').classList.add('hidden');
+            document.getElementById('byYearLoader').classList.add('hidden');
         }
     </script>
 </div>

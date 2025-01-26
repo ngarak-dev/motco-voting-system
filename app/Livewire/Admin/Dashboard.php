@@ -106,6 +106,7 @@ class Dashboard extends Component {
 
     public function getFullStats() {
         try {
+            //candiddates
             $candidatesVotes = Candidate::with([
                 'president:id,first_name,last_name',
                 'vice:id,first_name,last_name'
@@ -120,8 +121,31 @@ class Dashboard extends Component {
 
             //Number of students who are not in registered voters
             $nonRegisteredVoters = Student::whereNotIn('id', RegisteredVoter::pluck('student_id'))->count();
+
             //Registered voters who have not voted
             $registeredNotVoted = RegisteredVoter::where('voted', 0)->count();
+
+            //By sex
+            $votersBySex = Student::whereHas('registeredVoters')
+                ->selectRaw("sex, COUNT(*) as total")
+                ->groupBy('sex')
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [
+                        $item->sex === 'F' ? 'WANAWAKE' : ($item->sex === 'M' ? 'WANAUME' : 'OTHER') => $item->total
+                    ];
+                });
+
+            //By year
+            $votersByYear = Student::whereHas('registeredVoters')
+                ->selectRaw('year, COUNT(*) as total')
+                ->groupBy('year')
+                ->get()
+                ->mapWithKeys(function ($item) {
+                    return [
+                        $item->year === 1 ? 'MWAKA WA KWANZA' : ($item->year === 2 ? 'MWAKA WA PILI' : 'MWAKA WA TATU') => $item->total
+                    ];
+                });
 
             return [
                 'status' => 'success',
@@ -130,7 +154,9 @@ class Dashboard extends Component {
                 'data' => [
                     'candidatesVotes' => $candidatesVotes,
                     'nonRegisteredVoters' => $nonRegisteredVoters,
-                    'registeredNotVoted' => $registeredNotVoted
+                    'registeredNotVoted' => $registeredNotVoted,
+                    'votersBySex' => $votersBySex,
+                    'votersByYear' => $votersByYear
                 ]
             ];
         }
