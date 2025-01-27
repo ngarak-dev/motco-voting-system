@@ -29,7 +29,7 @@ class Dashboard extends Component {
     public $candidatesWithVotes;
     public $activeTab = 'mwanzo';
 
-    public $start, $end;
+    public $time_management;
 
     public function setTab($tab){
         $this->activeTab = $tab;
@@ -47,6 +47,8 @@ class Dashboard extends Component {
         else {
             $this->candidatesWithVotes = [];
         }
+
+        $this->time_management = System::first();
     }
 
     public function getTotalVotes() {

@@ -158,11 +158,11 @@
                         <div class="grid grid-cols-2 gap-4">
                             <div class="m-4 start">
                                 <label for="start">MUDA WA KUFUNGUA</label> <br>
-                                <input type="datetime-local" name="start" wire:model='start' class="w-full input input-success"  id="start" required>
+                                <input type="datetime-local" name="start" wire:model='start' value="{{ $time_management->start }}" class="w-full input input-success"  id="start" required>
                             </div>
                             <div class="m-4 end">
                                 <label for="end">MUDA WA KUFUNGA</label> <br>
-                                <input type="datetime-local" name="end" wire:model='end' class="w-full input input-success"  id="end" required>
+                                <input type="datetime-local" name="end" wire:model='end' value="{{ $time_management->end }}" class="w-full input input-success"  id="end" required>
                             </div>
                         </div>
 
