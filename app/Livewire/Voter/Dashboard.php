@@ -10,6 +10,7 @@ use Livewire\Component;
 use App\Models\Candidate;
 use App\Events\VoteCastEvent;
 use App\Models\RegisteredVoter;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,25 +21,23 @@ class Dashboard extends Component {
     public $voter;
     public $candidates;
     public bool $hasVoted;
-    public $candidate, $selectedCandidate;
-    public $president, $vice;
-    public $view;
-
+    public $candidate;
+    public $selectedCandidate;
+    // public $president;
+    // public $vice;
     public $time_management;
 
     public function mount () {
         $this->voter = auth()->guard('student')->user();
         $this->candidates = Candidate::with('student')->orderBy('id', 'asc')->get();
-        $this->hasVoted = Auth::user()->registeredVoter?->voted ?? 0;
+        $this->hasVoted = $this->voter->registeredVoter?->voted;
         $this->hasVoted ? $this->getSelectedCandidate() : null;
-
-        $this->time_management = System::get(['start', 'end'])->first();
     }
 
     public function submitVote () {
         logger($this->candidate);
+        $thisVoter = $this->voter->registeredVoter;
 
-        $thisVoter = Auth::user()->registeredVoter;
         $thisVoter->voted = true;
 
         Vote::upsert([
@@ -47,9 +46,6 @@ class Dashboard extends Component {
         ], []);
 
         $thisVoter->save();
-
-        // event(new VoteCastEvent($this->candidate));
-        // broadcast(new VoteCastEvent($this->candidate))->toOthers();
 
         $this->success('Hongera umefanikiwa kupiga kura !');
         return redirect()->route('home');
@@ -68,7 +64,7 @@ class Dashboard extends Component {
 
     public function render() {
         $system = System::first();
-        if ($system->start > now() || $system->end < now()) {
+        if ($system->isOpen()) {
             return view('livewire.voter.time_management');
         }
         else {

@@ -14,7 +14,6 @@
         <p>Admission Number: <b>{{ $voter->admission_number }}</b></p>
         <p>Option: <b>{{ $voter->option }}</b></p>
         <hr class="my-4">
-        <p class="font-bold">MUDA WA UCHAGUZI: <span class="text-primary">{{ $time_management->start }} MPAKA {{ $time_management->end }}</span></p>
 
         <div class="grid grid-cols-1 my-8 text-center bg-red-300 rounded-md justify-items-center">
             <img src="{{ asset('img/time_management.gif') }}" class="h-48 my-6" alt="">

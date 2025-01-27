@@ -14,9 +14,6 @@
         <p>Admission Number: <b>{{ $voter->admission_number }}</b></p>
         <p>Option: <b>{{ $voter->option }}</b></p>
 
-        <hr class="my-4">
-        <p class="font-bold">MUDA WA UCHAGUZI: <span class="text-primary">{{ $time_management->start }} MPAKA {{ $time_management->end }}</span></p>
-
         @if ($hasVoted)
             <div class="flex justify-center h-20 mt-4 text-3xl font-bold text-center text-white bg-green-500 border align-self-center">
                 <div class="flex items-center py-2">

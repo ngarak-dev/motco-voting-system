@@ -180,7 +180,7 @@
                 console.log('Refreshing data...');
                 // $wire.dispatchSelf('refreshData');
                 @this.dispatchSelf('refreshData');
-            }, 180000); // 3 minutes
+            }, 50000);
         });
     </script>
 
