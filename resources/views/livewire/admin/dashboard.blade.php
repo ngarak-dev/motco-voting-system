@@ -4,6 +4,7 @@
         <div class="flex border-b border-gray-200 shadow bg-gray-50">
             <button wire:click="setTab('mwanzo')" class="px-4 py-2 font-bold text-gray-600 border-b-2 border-transparent hover:text-gray-800 focus:outline-none">MWANZO</button>
             <button wire:click="setTab('takwimu')" class="px-4 py-2 font-bold text-gray-600 border-b-2 border-transparent hover:text-gray-800 focus:outline-none">TAKWIMU</button>
+            <button wire:click="setTab('muda')" class="px-4 py-2 font-bold text-gray-600 border-b-2 border-transparent hover:text-gray-800 focus:outline-none">MUDA WA UCHAGUZI</button>
         </div>
 
         <!-- Tab Content -->
@@ -83,10 +84,10 @@
                                     <div class="flex items-center justify-start p-2 my-2 border border-secondary">
                                         <x-avatar class="!w-14" :image="$candidate['president_img']" />
                                         <x-avatar class="!w-14" :image="$candidate['vice_img']" />
-                                        <div class="font-bold text-green-500 text-md whitespace-nowrap lg:text-xl">
+                                        <div class="font-bold text-green-500 text-md whitespace-nowrap lg:text-lg">
                                             <span class="ml-3">{{ $candidate['candidates_name'] }}</span>
                                         </div>
-                                        <span class="ml-4" style="font-family: 'Gloock', sans-serif; font-size: 3em;">{{ $candidate['percentage'] }}%</span>
+                                        <span class="ml-4" style="font-family: 'Gloock', sans-serif; font-size: 2.5em;">{{ $candidate['percentage'] }}%</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -146,6 +147,27 @@
                         </div>
 
                     </div>
+
+                </div>
+
+            @elseif ($activeTab === 'muda')
+                <div class="p-4 rounded-lg shadow bg-gray-50">
+                    <h2 class="text-xl font-bold">WEKA MUDA WA UCHGUZI</h2>
+
+                    <x-form wire:submit='setElectionTime'>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="m-4 start">
+                                <label for="start">MUDA WA KUFUNGUA</label> <br>
+                                <input type="datetime-local" name="start" wire:model='start' class="w-full input input-success"  id="start" required>
+                            </div>
+                            <div class="m-4 end">
+                                <label for="end">MUDA WA KUFUNGA</label> <br>
+                                <input type="datetime-local" name="end" wire:model='end' class="w-full input input-success"  id="end" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success">WEKA MUDA</button>
+                    </x-form>
 
                 </div>
             @endif
@@ -216,7 +238,7 @@
                 data: {
                     labels: candidates,
                     datasets: [{
-                        label: 'Votes Count',
+                        label: 'KURA',
                         data: voteCounts,
                         backgroundColor: [
                             '#4CAF50', '#2196F3', '#FFC107','#FF5722',
@@ -296,7 +318,7 @@
                             },
                             title: {
                                 display: true,
-                                text: 'Number of Votes',
+                                text: '',
                                 color: '#333',
                                 font: {
                                     size: 14,

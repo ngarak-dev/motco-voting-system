@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\System;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,6 +20,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Msimamizi wa Uchaguzi',
             'username' => 'admin',
             'email' => 'admin@morogorotc.ac.tz',
+        ]);
+
+        System::factory()->create([
+            'id' => 1,
+            'start' => now(),
+            'end' => now()
         ]);
     }
 }

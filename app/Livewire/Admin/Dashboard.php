@@ -10,6 +10,7 @@ use App\Models\Candidate;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Title;
 use App\Models\RegisteredVoter;
+use App\Models\System;
 use Illuminate\Container\Attributes\Log;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
@@ -26,10 +27,9 @@ class Dashboard extends Component {
     public $noRegVoters;
 
     public $candidatesWithVotes;
-
     public $activeTab = 'mwanzo';
 
-    public array $optionsChart;
+    public $start, $end;
 
     public function setTab($tab){
         $this->activeTab = $tab;
@@ -47,27 +47,6 @@ class Dashboard extends Component {
         else {
             $this->candidatesWithVotes = [];
         }
-
-        $this->optionsChart = [
-            'type' => 'bar',
-            'data' => [
-                'labels' => $this->candidatesWithVotes->pluck('president_name')->toArray(),
-                'datasets' => [
-                    [
-                        'label' => 'MATOKEO YA KURA KWA GRAFU',
-                        'data' => array_values($this->candidatesWithVotes->pluck('votes_count')->toArray()),
-                        'borderColor' => '#FFB1C1',
-                    ]
-                ],
-            ],
-            'options' => [
-                'animation' => true,
-                'color' => [
-                    'blue',
-                    'green',
-                ]
-            ]
-        ];
     }
 
     public function getTotalVotes() {
@@ -170,6 +149,17 @@ class Dashboard extends Component {
         }
     }
 
+    public function setElectionTime() {
+
+        System::upsert([
+            'id' => 1,
+            'start' => $this->start,
+            'end' => $this->end
+        ], []);
+
+        $this->success('Muda wa uchaguzi umewekwa');
+        return redirect()->back();
+    }
     public function logout () {
         Auth::logout();
         $this->success('Imefanikiwa');

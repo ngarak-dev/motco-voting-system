@@ -14,6 +14,9 @@
         <p>Admission Number: <b>{{ $voter->admission_number }}</b></p>
         <p>Option: <b>{{ $voter->option }}</b></p>
 
+        <hr class="my-4">
+        <p class="font-bold">MUDA WA UCHAGUZI: <span class="text-primary">{{ $time_management->start }} MPAKA {{ $time_management->end }}</span></p>
+
         @if ($hasVoted)
             <div class="flex justify-center h-20 mt-4 text-3xl font-bold text-center text-white bg-green-500 border align-self-center">
                 <div class="flex items-center py-2">
@@ -45,6 +48,16 @@
                     </div>
                 </div>
             </div>
+
+            {{-- LOG OUT USER --}}
+            <script>
+                setTimeout(function() {
+                    console.log('Should logout');
+                    window.location.href = '{{ route('voter-logout') }}';
+                    console.log('User logged out');
+                }, 30000);
+            </script>
+
         @else
             <x-alert icon="o-information-circle" class="my-6 text-center text-white alert-info">
                 <b>KARIBU KUPIGA KURA. KURA YAKO NI MUHIMU</b>
